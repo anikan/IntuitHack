@@ -2,6 +2,9 @@ require "rubygems"
 require "twitter"
 require './alchemyapi_ruby/alchemyapi'
 require 'json'
+require "net/http"
+require "uri"
+
 
 # returns a list of tweets containing the phrase within the dates specified
 # returns either @max_tweets tweets or all tweets found
@@ -9,18 +12,27 @@ require 'json'
 # @param from_date - begining date of the search ex."2011-02-28"
 # @param until_date - ending date of the search ex. "2011-03-01"
 
-stockAddress = URI("http://dev.markitondemand.com/Api/v2/Quote/jsonp?symbol=AAPL")
-request = Net::HTTP::Get.new stockAddress.request_uri
-http = Net::HTTP.new stockAddress.host, stockAddress.port
+
+stockAddress = URI.parse("http://dev.markitondemand.com/Api/v2/Quote/json?symbol=AAPL")
+response = Net::HTTP.get_response(stockAddress)
+# Will print response.body
+#Net::HTTP.get_print(stockAddress)
+# Full
+http = Net::HTTP.new(stockAddress.host, stockAddress.port)
+response = http.request(Net::HTTP::Get.new(stockAddress.request_uri))
+
+
+#####request = Net::HTTP::Get.new stockAddress.request_uri
+#####http = Net::HTTP.new stockAddress.host, stockAddress.port
 #http.use_ssl = true
 #http.verify_mode = OpenSSL::SSL::VERIFY_PEER
 
-response = http.request request
-puts response['LastPrice']
-puts "help"
+#####response = http.request request
+##puts response.body['LastPrice']
+##puts "help"
 
-#text = JSON.parse(response.body)
-#price = text["LastPrice"]
+text = JSON.parse(response.body)
+price = text['LastPrice']
 puts price
 
 
