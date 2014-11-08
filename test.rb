@@ -37,7 +37,7 @@ end
 index=0
 listofthings = []
 
-client.search("Gilead :)", result_type: "recent").take(1500).each do |tweet|
+client.search("Gilead :)", result_type: "recent").take(20).each do |tweet|
   #puts tweet.text
   listofthings[index] = tweet.text
   index+=1
@@ -57,6 +57,7 @@ else
 	puts 'Error in sentiment analysis call: ' + response['statusInfo']
 end
 end
+
 #print client.get_all_tweets("khoi148")
 #print get_tweets("nick")
 #print search()
