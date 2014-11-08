@@ -32,11 +32,12 @@ def client.get_all_tweets(user)
    
   end
 end
-
+i=0
 client.search("to:windows :(", result_type: "recent").take(300).each do |tweet|
+  i+=1
   puts tweet.text
 end
-
+print i
 
 #print client.get_all_tweets("khoi148")
 #print get_tweets("nick")
