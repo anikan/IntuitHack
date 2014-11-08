@@ -15,20 +15,17 @@ require 'json'
 #address = URI("#{baseurl}#{path}?#{company}")
 #address2 = URI("#{baseurl}#{path}?#{company2}")
 
-address = URI("https://api.twitter.com/1.1/search/tweets.json?q=Microsoft%20%3A%29")
+addressNeg = URI("https://api.twitter.com/1.1/search/tweets.json?q=Microsoft%20%3A%28")
 
-puts address
+addressPos = URI("https://api.twitter.com/1.1/search/tweets.json?q=Microsoft%20%3A%29")
 
-request = Net::HTTP::Get.new address.request_uri
+#puts address
+#puts address2
 
-# Print data about a list of Tweets
-def print_timeline(tweets)
-  # ADD CODE TO ITERATE THROUGH EACH TWEET AND PRINT ITS TEXT
-    print "I got here"
-end
+request = Net::HTTP::Get.new addressPos.request_uri
 
 # Set up HTTP.
-http             = Net::HTTP.new address.host, address.port
+http             = Net::HTTP.new addressPos.host, addressPos.port
 http.use_ssl     = true
 http.verify_mode = OpenSSL::SSL::VERIFY_PEER
 
@@ -48,10 +45,39 @@ request.oauth! http, consumer_key, access_token
 http.start
 response = http.request request
 
-# Parse and print the Tweet if the response code was 200
-tweets = nil
-if response.code == '200' then
-  tweets = JSON.parse(response.body)
-  print_timeline(tweets)
+# Print data about a list of Tweets
+def compareTweets(tweetPositive, tweetNegative)
+  # ADD CODE TO ITERATE THROUGH EACH TWEET AND PRINT ITS TEXT
+    print tweetPositive
 end
+
+# Parse and print the Tweet if the response code was 200
+tweetsPos = nil
+tweetsNeg = nil
+
+if response.code == '200' then
+  tweetsPos = JSON.parse(response.body)
+  
+  #Now request the negative components
+  request = Net::HTTP::Get.new addressNeg.request_uri
+
+  # Set up HTTP.
+  http             = Net::HTTP.new addressNeg.host, addressNeg.port
+  http.use_ssl     = true
+  http.verify_mode = OpenSSL::SSL::VERIFY_PEER
+
+  # Issue the request.
+  request.oauth! http, consumer_key, access_token
+  http.start
+  response = http.request request
+  
+  tweetsNeg = JSON.parse(response.body)
+  #print tweetsNeg
+  
+  compareTweets(tweetsPos, tweetsNeg)
+end
+
+
+
+
 nil
