@@ -1,12 +1,27 @@
 require "rubygems"
 require "twitter"
 require '~/alchemyapi_ruby/alchemyapi'
+require 'json'
 
 # returns a list of tweets containing the phrase within the dates specified
 # returns either @max_tweets tweets or all tweets found
 # @param phrase - a phrase to search for
 # @param from_date - begining date of the search ex."2011-02-28"
 # @param until_date - ending date of the search ex. "2011-03-01"
+
+#stockAddress = URI("http://dev.markitondemand.com/Api/v2/Quote/jsonp?symbol=AAPL")
+#request = Net::HTTP::Get.new stockAddress.request_uri
+
+#http = Net::HTTP.new stockAddress.host, stockAddress.port
+#http.use_ssl = true
+#http.verify_mode = OpenSSL::SSL::VERIFY_PEER
+
+#response = http.request request
+
+#price = JSON.parse(response.body)["LastPrice"]
+#puts price
+#
+
 alchemyapi = AlchemyAPI.new()
 	client = Twitter::REST::Client.new do |config|
 	config.consumer_key    = "DYhlRhiYhJGm8OBEsBzJs9k1t"
@@ -18,7 +33,7 @@ alchemyapi = AlchemyAPI.new()
 	index=0
 	listofthings = []
 
-	client.search("justin bieber", result_type: "recent").take(10).each do |tweet|
+	client.search("murder", result_type: "recent").take(10).each do |tweet|
 #puts tweet.text
 	listofthings[index] = tweet.text
 	index+=1
@@ -43,7 +58,7 @@ alchemyapi = AlchemyAPI.new()
 	negSentimentNum+=1.0
 	negSentiment += response['docSentiment']['score'].to_f 
 	end
-	
+
 	end
 	else
 #	puts 'Error in sentiment analysis call: ' + response['statusInfo']
@@ -51,10 +66,10 @@ alchemyapi = AlchemyAPI.new()
 	end
 
 
-finalSent = 0.0
+	finalSent = 0.0
 finalSent = (posSentiment.to_f/posSentimentNum.to_f) > (negSentiment.to_f/posSentimentNum.to_f)
-if finalSent == true
-puts 'predominantly positive!'
-else
-puts 'predominantly negative!'
-end
+	if finalSent == true
+	puts 'predominantly positive! (' + ((posSentiment.to_f/posSentimentNum.to_f).to_f * 100.0).to_s + ' %)'
+	else
+	puts 'predominantly negative! (' + ((negSentiment.to_f/negSentimentNum.to_f).to_f * 100.0).to_s + ' %)'
+	end
