@@ -1,0 +1,15 @@
+<html>
+<title> Moodstock </title>
+
+<body>
+	<img src="MoodStock2.png" style="width:894;height:188">
+</body>
+
+<form>
+    <!--<input type="text" placeholder="Search..." required>
+    <input type="button" value="Search"> -->
+	h1{
+	<TEXTAREA Name="content" ROWS=1 COLS=120></TEXTAREA>
+	}
+</form>
+</html>
