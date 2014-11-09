@@ -1,6 +1,6 @@
 require "rubygems"
 require "twitter"
-require '~/alchemyapi_ruby/alchemyapi'
+require './alchemyapi_ruby/alchemyapi'
 require 'json'
 
 # returns a list of tweets containing the phrase within the dates specified
@@ -9,18 +9,20 @@ require 'json'
 # @param from_date - begining date of the search ex."2011-02-28"
 # @param until_date - ending date of the search ex. "2011-03-01"
 
-#stockAddress = URI("http://dev.markitondemand.com/Api/v2/Quote/jsonp?symbol=AAPL")
-#request = Net::HTTP::Get.new stockAddress.request_uri
-
-#http = Net::HTTP.new stockAddress.host, stockAddress.port
+stockAddress = URI("http://dev.markitondemand.com/Api/v2/Quote/jsonp?symbol=AAPL")
+request = Net::HTTP::Get.new stockAddress.request_uri
+http = Net::HTTP.new stockAddress.host, stockAddress.port
 #http.use_ssl = true
 #http.verify_mode = OpenSSL::SSL::VERIFY_PEER
 
-#response = http.request request
+response = http.request request
+puts response['LastPrice']
+puts "help"
 
-#price = JSON.parse(response.body)["LastPrice"]
-#puts price
-#
+#text = JSON.parse(response.body)
+#price = text["LastPrice"]
+puts price
+
 
 alchemyapi = AlchemyAPI.new()
 	client = Twitter::REST::Client.new do |config|
