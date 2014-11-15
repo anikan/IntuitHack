@@ -22,7 +22,7 @@ public class PCAnalyzer {
                 if (redDiff + greenDiff + blueDiff > threshold)
                 {
                     numDifferentPixels++;
-                    inputPixel.setPixel(0,255,0);
+                    input.setPixel(0,255,0);
                 }
             }
         }
