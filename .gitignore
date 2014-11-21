@@ -1,6 +1,9 @@
+<<<<<<< HEAD
 #Java class files
 *.class
 
+=======
+>>>>>>> 947d035682cc674a66ee6b5c6f7de4711f0272aa
 # Windows image file caches
 Thumbs.db
 ehthumbs.db
