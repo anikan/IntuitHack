@@ -19,6 +19,7 @@ public class MainGame extends WindowController {
         try
         {
             RandomEvent event = new RandomEvent(file, this);
+            this.validate();
             System.out.println("Worked");
         }
 
